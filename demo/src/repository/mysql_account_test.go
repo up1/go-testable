@@ -9,7 +9,7 @@ import (
 )
 
 func TestGetByName(t *testing.T) {
-  // Arrange
+	// Arrange
 	db, mock, err := sqlmock.New()
 	if err != nil {
 		t.Fatalf("an error '%s' was not expected when opening a stub database connection", err)
@@ -18,14 +18,14 @@ func TestGetByName(t *testing.T) {
 	rows := sqlmock.NewRows([]string{"id", "name", "email"}).AddRow(1, "Stub Name 1", "Stun Email 2")
 	sql := `SELECT id, name, email FROM account WHERE name=?`
 
-  // Stub/Mocking
+	// Stub/Mocking
 	mock.ExpectQuery(sql).WillReturnRows(rows)
 	ar := accountRepo.NewMySQLAccountRepository(db)
 
-  // Act
+	// Act
 	account, err := ar.GetByName(context.TODO(), "Stub Name 1")
 
-  // Assert
+	// Assert
 	assert.NoError(t, err)
 	assert.NotNil(t, account)
 }
