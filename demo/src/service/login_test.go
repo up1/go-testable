@@ -2,6 +2,7 @@ package service_test
 
 import (
 	"context"
+	"errors"
 	"github.com/stretchr/testify/assert"
 	"model"
 	"service"
@@ -36,4 +37,23 @@ func TestLoginByName(t *testing.T) {
 	assert.NoError(t, err)
 	assert.NotNil(t, account)
 	assert.Equal(t, expectedAccount, account)
+}
+
+type MockAccountRepositoryError struct {
+}
+
+func (m *MockAccountRepositoryError) GetByName(ctx context.Context, name string) (*model.Account, error) {
+	return nil, errors.New("Unexpexted Error")
+}
+
+func TestLoginByNameFail(t *testing.T) {
+	// Arrange
+	l := service.NewLoginService(&MockAccountRepositoryError{})
+
+	// Act
+	account, err := l.Login(context.TODO(), "Test Name 1")
+
+	// Assert
+	assert.Error(t, err)
+	assert.Nil(t, account)
 }
