@@ -49,8 +49,8 @@ func TestGetByNameWithDataNotFound(t *testing.T) {
 	account, err := ar.GetByName(context.TODO(), "Stub Name 1")
 
 	// Assert
-	assert.NoError(t, err)
-	assert.NotNil(t, account)
+	assert.Error(t, err)
+	assert.Nil(t, account)
 }
 
 func TestGetByNameWithFail(t *testing.T) {
