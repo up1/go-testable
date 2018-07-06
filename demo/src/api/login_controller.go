@@ -32,14 +32,12 @@ func (lc *LoginController) Authentication(c echo.Context) error {
 }
 
 func getStatusCode(err error) int {
-
 	if err == nil {
 		return http.StatusOK
 	}
 
 	switch err {
 	case model.INTERNAL_SERVER_ERROR:
-
 		return http.StatusInternalServerError
 	case model.NOT_FOUND_ERROR:
 		return http.StatusNotFound
@@ -48,4 +46,11 @@ func getStatusCode(err error) int {
 	default:
 		return http.StatusInternalServerError
 	}
+}
+
+func NewLoginController(e *echo.Echo, ls service.LoginService) {
+	controller := &LoginController{
+		LService: ls,
+	}
+	e.GET("/authen/:name", controller.Authentication)
 }

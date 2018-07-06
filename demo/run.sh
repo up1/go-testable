@@ -7,7 +7,7 @@ export GOPATH="$CURDIR"
 # go get -u github.com/labstack/echo/...
 gofmt -w src/
 go test -v -cover -coverprofile=coverage.out  ./...
-# go tool cover -html=coverage.out
+go tool cover -html=coverage.out
 go install main
 export GOPATH="$OLDGOPATH"
 echo 'finished'
