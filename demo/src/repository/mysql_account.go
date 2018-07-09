@@ -14,8 +14,8 @@ type mysqlAccountRepository struct {
 	Conn *sql.DB
 }
 
-func NewMySQLAccountRepository(Conn *sql.DB) AccountRepository {
-	return &mysqlAccountRepository{Conn}
+func NewMySQLAccountRepository(conn *sql.DB) AccountRepository {
+	return &mysqlAccountRepository{conn}
 }
 
 func (m *mysqlAccountRepository) GetByName(ctx context.Context, name string) (*model.Account, error) {
